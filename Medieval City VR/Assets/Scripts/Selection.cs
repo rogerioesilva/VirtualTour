@@ -2,7 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(InferenceManager))]
 public abstract class Selection : MonoBehaviour
 {
-    public abstract Action ChooseOption(List<Action> ListOfPlausibleActions);
+    protected InferenceManager _inference;
+    public abstract Action ChooseOption();
+
+    protected virtual void Start() 
+    {
+        _inference = gameObject.GetComponent<InferenceManager>();
+    }
 }

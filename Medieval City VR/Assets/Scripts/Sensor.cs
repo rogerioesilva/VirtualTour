@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Sensor : MonoBehaviour
 {
-    public List<Percept> ListOfPercepts;
+    protected List<Percept> ListOfPercepts;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -12,5 +12,18 @@ public abstract class Sensor : MonoBehaviour
         ListOfPercepts = new List<Percept>();
     }
 
-    public abstract void Run();
+    public virtual void Run()
+    {
+        ListOfPercepts.Clear();
+    }
+
+    public List<Percept> getPercepts()
+    {
+        return ListOfPercepts;
+    }
+
+    public bool hasPercepts()
+    {
+        return ListOfPercepts.Count > 0;
+    }
 }

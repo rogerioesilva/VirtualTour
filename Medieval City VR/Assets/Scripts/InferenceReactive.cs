@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Memory))]
+[RequireComponent(typeof(BehaviorManager))]
 public class InferenceReactive : Inference
 {
     protected override void Start()
@@ -9,23 +11,32 @@ public class InferenceReactive : Inference
         base.Start();
     }
 
-    public override List<Action> Evaluate(List<Percept> Percepts)
+    public override List<Action> Evaluate(PerceptsManager pctMgr)
     {
-        this.Actions.Clear();
+        Actions.Clear();
 
-        foreach (Percept percept in Percepts)
+        Percept pctSunlight = pctMgr.getPercept("sunlight");
+        Percept pctPOI = pctMgr.getPercept("POI");
+
+        if (pctSunlight != null && pctSunlight.bvalue)
         {
-            switch(percept.type)
+            if (!GetComponent<BehaviorManager>().isExecutingPlan())
             {
-                case PerceptType.VISUAL:
-                    if(percept.name == "sunlight")
-                    {
-                        if(percept.value)
-                            this.Actions.Add(new Action(Random.Range(0, 100) < 80 ? ActionLabel.WANDER : ActionLabel.REST, 50));
-                        else
-                            this.Actions.Add(new Action(ActionLabel.GO_HOME, 65));
-                    }
-                    break;
+                Actions.Add(new Action(ActionLabel.WANDER));
+                Actions.Add(new Action(ActionLabel.IDLE));
+            }
+        }
+        else
+            Actions.Add(new Action(ActionLabel.GO_HOME, 65, true));
+
+        if(pctPOI != null)
+        {
+            if (gameObject.GetComponent<Memory>())
+            {
+                if (pctPOI.strvalue == gameObject.GetComponent<Memory>().refHomePOI.GetComponent<POI>().name)
+                {
+                    Actions.Add(new Action(ActionLabel.REST, 50, true));
+                }
             }
         }
 

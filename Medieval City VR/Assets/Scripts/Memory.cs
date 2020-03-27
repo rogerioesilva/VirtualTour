@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Memory : MonoBehaviour
 {
-    public string name;
-    public GameObject HomeRef;
-
+    public string ADAname;
+    public GameObject refHomePOI;
 }

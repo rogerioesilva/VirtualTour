@@ -2,31 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class POI : MonoBehaviour
+[RequireComponent(typeof(Memory))]
+public abstract class POI : MonoBehaviour
 {
-    public string name;
+    public string POIname;
     public string owner;
 
-    void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("ADA"))
-            if(other.gameObject.GetComponent<Memory>().name == name)
+            if(other.gameObject.GetComponent<Memory>().ADAname == owner)
             {
                 if(other.gameObject.GetComponent<SensorPOI>())
                 {
-                    other.gameObject.GetComponent<SensorPOI>().EnterPOI(name);
+                    //Debug.Log(owner + " is at " + POIname);
+                    other.gameObject.GetComponent<SensorPOI>().EnterPOI(POIname);
                 }
             }
     }
 
-    void OnTriggerExit(Collider other)
+    protected virtual void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("ADA"))
-            if (other.gameObject.GetComponent<Memory>().name == name)
+            if (other.gameObject.GetComponent<Memory>().ADAname == owner)
             {
                 if (other.gameObject.GetComponent<SensorPOI>())
                 {
-                    other.gameObject.GetComponent<SensorPOI>().ExitPOI(name);
+                    //Debug.Log(owner + " left " + POIname);
+                    other.gameObject.GetComponent<SensorPOI>().ExitPOI(POIname);
                 }
             }
     }

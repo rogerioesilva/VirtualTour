@@ -11,5 +11,15 @@ public abstract class Inference : MonoBehaviour
         Actions = new List<Action>();
     }
 
-    public abstract List<Action> Evaluate(List<Percept> Percepts);
+    public abstract List<Action> Evaluate(PerceptsManager pctMgr);
+
+    public List<Action> getActions()
+    {
+        return Actions;
+    }
+
+    public bool hasActions()
+    {
+        return Actions.Count > 0;
+    }
 }

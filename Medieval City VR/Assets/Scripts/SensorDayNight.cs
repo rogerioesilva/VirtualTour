@@ -15,6 +15,7 @@ public class SensorDayNight : Sensor
 
     public override void Run()
     {
-        ListOfPercepts.Add(new Percept(PerceptType.VISUAL, "sunlight", _envManager.isDay));
+        base.Run();
+        ListOfPercepts.Add(new Percept(PerceptSource.VISUAL, "sunlight", _envManager.isDay));
     }
 }

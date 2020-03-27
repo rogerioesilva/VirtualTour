@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿  using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,6 +16,12 @@ public class EnvManager : MonoBehaviour
         TimeOfDay = 0.0f;
     }
 
+    public void ToggleDayNight()
+    {
+        isDay = !isDay;
+        this.SetDaylight();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -23,8 +29,7 @@ public class EnvManager : MonoBehaviour
         if (TimeOfDay >= DayDuration)
         {
             TimeOfDay = 0.0f;
-            isDay = !isDay;
-            this.SetDaylight();
+            ToggleDayNight();
         }
     }
 
